@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+curl -XPOST http://localhost:3000/graphql \
+  -H 'content-type: application/json' \
+  -d '{"query":"{movie(id: 1){title}}","variables":null,"operationName":null}'
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+curl -XPOST http://localhost:3000/graphql \
+  -H 'content-type: application/json' \
+  -d '{"query":"query ($id: Int!) {movies(year: $id){title}}","variables":"{\"id\": 1981}","operationName":null}'
