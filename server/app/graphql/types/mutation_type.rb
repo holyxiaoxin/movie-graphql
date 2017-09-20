@@ -9,5 +9,6 @@ Types::MutationType = GraphQL::ObjectType.define do
     }
   end
 
-  field :createMovie, function: Mutations::CreateMovie.new
+  field :createMovie, function: Resolvers::CreateMovie.new
+  field :createActor, function: Resolvers::CreateActor.new
 end

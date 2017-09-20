@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { gql, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import { moviesQuery } from '../queries/movies';
 
 class Movies extends Component {
   static defaultProps = {
@@ -56,14 +57,4 @@ class Movies extends Component {
   }
 }
 
-export default graphql(gql`
-  query App {
-    movies(year: 1981) {
-      title
-      year
-      actors {
-        name
-      }
-    }
-  }
-`)(Movies);
+export default graphql(moviesQuery)(Movies);

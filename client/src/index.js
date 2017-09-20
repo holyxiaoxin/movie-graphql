@@ -5,10 +5,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   networkInterface: createNetworkInterface({
     uri: 'http://localhost:3000/graphql',
   }),
+  connectToDevTools: true,
 });
 
 ReactDOM.render(

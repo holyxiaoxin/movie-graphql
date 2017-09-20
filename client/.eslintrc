@@ -4,8 +4,12 @@
   "rules": {
     "no-console": ["off", "always"],
     "arrow-body-style": ["off", "always"],
+    "import/prefer-default-export": ["off", "always"],
     "react/no-array-index-key": ["off", "always"],
     "react/prop-types": ["off", "always"],
     "react/jsx-filename-extension": ["off", "always"]
+  },
+  "env": {
+    "browser": true
   }
 }

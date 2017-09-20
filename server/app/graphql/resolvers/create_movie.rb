@@ -1,4 +1,4 @@
-class Mutations::CreateMovie < GraphQL::Function
+class Resolvers::CreateMovie < GraphQL::Function
   # arguments passed as "args"
   argument :title, types.String
   argument :year, types.Int

@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { gql, graphql } from 'react-apollo';
-
-const mutation = gql`
-mutation CreateMovie($title: String, $year: Int) {
-  createMovie(title: $title, year: $year) {
-    title
-    year
-  }
-}
-`;
+// import PropTypes from 'prop-types';
+import { graphql } from 'react-apollo';
+import { moviesQuery, createMovie } from '../queries/movies';
 
 class CreateMovie extends Component {
   handleSumbit = () => {
     console.log(this.title.value);
     console.log(this.year.value);
     this.props
-      .mutate({ variables: {
-        title: this.title.value,
-        year: parseInt(this.year.value, 10),
-      } })
+      .mutate({
+        variables: {
+          title: this.title.value,
+          year: parseInt(this.year.value, 10),
+        },
+        refetchQueries: [{
+          query: moviesQuery,
+        }],
+      })
       .then((res) => {
         console.log(res);
       })
@@ -43,4 +40,4 @@ class CreateMovie extends Component {
   }
 }
 
-export default graphql(mutation)(CreateMovie);
+export default graphql(createMovie)(CreateMovie);
