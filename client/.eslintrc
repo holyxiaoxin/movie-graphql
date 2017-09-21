@@ -4,6 +4,13 @@
   "rules": {
     "no-console": ["off", "always"],
     "arrow-body-style": ["off", "always"],
+    "comma-dangle": ["error", {
+      "arrays": "only-multiline",
+      "objects": "only-multiline",
+      "imports": "only-multiline",
+      "exports": "only-multiline",
+      "functions": "only-multiline",
+    }],
     "import/prefer-default-export": ["off", "always"],
     "react/no-array-index-key": ["off", "always"],
     "react/prop-types": ["off", "always"],
@@ -11,5 +18,5 @@
   },
   "env": {
     "browser": true
-  }
+  },
 }
