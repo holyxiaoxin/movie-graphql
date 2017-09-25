@@ -20,6 +20,20 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
+  field :top_n_movies do
+    type types[Types::MovieType]
+    argument :top_n, types.Int
+    resolve -> (obj, args, ctx) {
+      if args[:top_n].present?
+        puts 'Movie.all.limit(args[:top_n])'
+        Movie.all.limit(args[:top_n])
+      else
+        puts 'Movie.all'
+        Movie.all
+      end
+    }
+  end
+
   field :movies do
     type types[Types::MovieType]
     argument :year, types.Int
@@ -31,7 +45,7 @@ Types::QueryType = GraphQL::ObjectType.define do
       end
     }
   end
-
+  
   field :actor do
     type Types::ActorType
     argument :id, !types.ID
