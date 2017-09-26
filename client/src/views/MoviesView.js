@@ -1,7 +1,6 @@
 import React from 'react';
 import Movies from '../containers/Movies';
-import CreateMovie from '../containers/CreateMovie';
-import CreateActor from '../containers/CreateActor';
+import { moviesQuery } from '../queries/movies';
 import '../assets/styles/App.css';
 
 const MoviesView = () => (
@@ -12,9 +11,7 @@ const MoviesView = () => (
       flexDirection: 'column',
     }}
   >
-    <Movies />
-    <CreateMovie />
-    <CreateActor />
+    <Movies gql={moviesQuery} />
   </div>
 );
 
