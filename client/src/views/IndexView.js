@@ -13,7 +13,7 @@ const IndexView = () => (
       flexDirection: 'column',
     }}
   >
-    <Movies gql={topNMoviesQuery} />
+    <Movies gql={topNMoviesQuery} top_n={3} />
     <CreateMovie />
     <CreateActor />
   </div>

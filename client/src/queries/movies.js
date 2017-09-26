@@ -14,8 +14,8 @@ export const moviesQuery = gql`
 `;
 
 export const topNMoviesQuery = gql`
-  query IndexView {
-    movies: top_n_movies(top_n: 2) {
+  query IndexView($top_n: Int) {
+    movies: top_n_movies(top_n: $top_n) {
       id
       title
       year

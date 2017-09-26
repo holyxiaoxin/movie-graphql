@@ -57,9 +57,11 @@ class Movies extends Component {
   }
 }
 
-const MoviesHOC = ({ gql = moviesQuery }) => {
+const MoviesHOC = (props) => {
+  const { gql = moviesQuery } = props;
   const Comp = graphql(gql)(Movies);
-  return <Comp />;
+
+  return <Comp {...props} />;
 };
 
 export default MoviesHOC;
