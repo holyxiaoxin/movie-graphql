@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { moviesQuery } from '../queries/movies';
 
@@ -8,11 +8,11 @@ class Movies extends Component {
     data: {},
   }
 
-  static propTypes = {
-    data: PropTypes.shape({
-      movies: PropTypes.array,
-    }),
-  }
+  // static propTypes = {
+  //   data: PropTypes.shape({
+  //     movies: PropTypes.array,
+  //   }),
+  // }
 
   render() {
     const { data } = this.props;
@@ -52,14 +52,63 @@ class Movies extends Component {
             );
           })
         }
+        <div
+          style={{ fontSize: 22, color: 'blueviolet', padding: 20, textAlign: 'center' }}
+          onClick={data.loadMoreEntries}
+        >
+          Load more...
+        </div>
       </div>
     );
   }
 }
 
+const ITEMS_PER_PAGE = 5;
 const MoviesHOC = (props) => {
   const { gql = moviesQuery } = props;
-  const Comp = graphql(gql)(Movies);
+  const gqlObj = [gql, {
+    options(oProps) {
+      return {
+        variables: {
+          top_n: oProps.top_n,
+          offset: 0,
+          limit: ITEMS_PER_PAGE,
+        },
+        fetchPolicy: 'network-only',
+      };
+    },
+    props({ data }) {
+      return {
+        data: {
+          ...data,
+          loading: data.loading,
+          movies: data.movies,
+          loadMoreEntries() {
+            return data.fetchMore({
+              // query: ... (you can specify a different query. FEED_QUERY is used by default)
+              variables: {
+                // We are able to figure out which offset to use because it matches
+                // the movies length, but we could also use state, or the previous
+                // variables to calculate this (see the cursor example below)
+                offset: data.movies.length,
+              },
+              updateQuery: (previousResult, { fetchMoreResult }) => {
+                console.log('updateQuery');
+                if (!fetchMoreResult) { return previousResult; }
+                return Object.assign({}, previousResult, {
+                  // Append the new movies results to the old one
+                  movies: [...previousResult.movies, ...fetchMoreResult.movies],
+                });
+              },
+            });
+          },
+        }
+      };
+    },
+
+  }];
+
+  const Comp = graphql(...gqlObj)(Movies);
 
   return <Comp {...props} />;
 };

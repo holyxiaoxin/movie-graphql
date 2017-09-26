@@ -34,6 +34,19 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
+  field :movies_offset do
+    type types[Types::MovieType]
+    argument :offset, types.Int
+    argument :limit, types.Int
+    resolve -> (obj, args, ctx) {
+      if args[:offset].present? && args[:limit].present?
+        Movie.all.offset(args[:offset]).limit(args[:limit])
+      else
+        Movie.all
+      end
+    }
+  end
+
   field :movies do
     type types[Types::MovieType]
     argument :year, types.Int
@@ -45,7 +58,7 @@ Types::QueryType = GraphQL::ObjectType.define do
       end
     }
   end
-  
+
   field :actor do
     type Types::ActorType
     argument :id, !types.ID

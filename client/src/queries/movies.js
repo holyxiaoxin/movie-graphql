@@ -13,8 +13,21 @@ export const moviesQuery = gql`
   }
 `;
 
+export const moviesQueryOffset = gql`
+  query MoviesQueryOffset($offset: Int, $limit: Int) {
+    movies: movies_offset(offset: $offset, limit: $limit) {
+      id
+      title
+      year
+      actors {
+        name
+      }
+    }
+  }
+`;
+
 export const topNMoviesQuery = gql`
-  query IndexView($top_n: Int) {
+  query TopNMoviesQuery($top_n: Int) {
     movies: top_n_movies(top_n: $top_n) {
       id
       title
