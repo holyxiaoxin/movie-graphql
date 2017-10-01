@@ -1,6 +1,6 @@
 import React from 'react';
-import Movies from '../containers/Movies';
-import { moviesQueryOffset } from '../queries/movies';
+import MoviesWithCursor from '../containers/MoviesWithCursor';
+import { moviesQueryCursor } from '../queries/movies';
 import '../assets/styles/App.css';
 
 const MoviesView = () => (
@@ -11,7 +11,7 @@ const MoviesView = () => (
       flexDirection: 'column',
     }}
   >
-    <Movies gql={moviesQueryOffset} offset={0} limit={5} />
+    <MoviesWithCursor gql={moviesQueryCursor} limit={5} />
   </div>
 );
 

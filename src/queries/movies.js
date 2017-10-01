@@ -14,8 +14,21 @@ export const moviesQuery = gql`
 `;
 
 export const moviesQueryOffset = gql`
-  query MoviesQueryOffset($offset: Int, $limit: Int) {
+  query MoviesQueryOffset($offset: Int!, $limit: Int!) {
     movies: movies_offset(offset: $offset, limit: $limit) {
+      id
+      title
+      year
+      actors {
+        name
+      }
+    }
+  }
+`;
+
+export const moviesQueryCursor = gql`
+  query MoviesQueryCursor($cursor: String!, $limit: Int!) {
+    movies: movies_cursor(cursor: $cursor, limit: $limit) {
       id
       title
       year
