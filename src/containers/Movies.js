@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { moviesQuery } from '../queries/movies';
 
@@ -8,14 +8,14 @@ class Movies extends Component {
     data: {},
   }
 
-  // static propTypes = {
-  //   data: PropTypes.shape({
-  //     movies: PropTypes.array,
-  //   }),
-  // }
+  static propTypes = {
+    data: PropTypes.shape({
+      movies: PropTypes.array,
+    }),
+  }
 
   render() {
-    const { data } = this.props;
+    const { data, top_n: topN } = this.props;
     if (data.loading) return null;
 
     // {"title":"Indiana Jones","year":1981,
@@ -52,12 +52,16 @@ class Movies extends Component {
             );
           })
         }
-        <div
-          style={{ fontSize: 22, color: 'blueviolet', padding: 20, textAlign: 'center' }}
-          onClick={data.loadMoreEntries}
-        >
-          Load more...
-        </div>
+        {
+          topN ?
+            null :
+            <div
+              style={{ fontSize: 22, color: 'blueviolet', padding: 20, textAlign: 'center' }}
+              onClick={data.loadMoreEntries}
+            >
+              Load more...
+            </div>
+        }
       </div>
     );
   }
