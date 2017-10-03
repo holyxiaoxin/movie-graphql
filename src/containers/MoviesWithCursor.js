@@ -26,7 +26,7 @@ const gqlConfig = {
 
 // const MoviesWithCusorWrapper = (props) => {
 //   const { gql = moviesQuery } = props;
-//   const Comp = compose(graphql(gql, gqlConfig), withLoading)(MoviesWithCusor);
+//   const Comp = compose(graphql(gql, gqlConfig), withLoading)(Movies);
 //
 //   return React.createElement(Comp, props);
 // };
