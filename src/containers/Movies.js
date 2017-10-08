@@ -13,7 +13,7 @@ const gqlConfig = {
         offset: 0,
         limit: ITEMS_PER_PAGE,
       },
-      fetchPolicy: 'network-only',
+      // fetchPolicy: 'network-only',
     }),
   props: ({ data }) =>
     ({
