@@ -32,7 +32,7 @@ export default class MoviesWithCusor extends Component {
                   padding: 12,
                 }}
               >
-                <div>Title: {m.title}</div>
+                <div>Id {m.id}: {m.title}</div>
                 <div>Year: {m.year}</div>
                 <div>Actors:
                   {

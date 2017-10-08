@@ -10,7 +10,7 @@ const gqlConfig = {
     ({
       variables: {
         top_n: props.top_n,
-        cursor: '0',
+        // cursor: '0',
         limit: props.limit || ITEMS_PER_PAGE,
       },
       // fetchPolicy: 'network-only',

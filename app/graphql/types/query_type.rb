@@ -19,7 +19,7 @@ module Types
       resolve -> (obj, args, ctx) {
         if args[:top_n].present?
           puts 'Movie.all.limit(args[:top_n])'
-          Movie.all.limit(args[:top_n])
+          Movie.all.order(id: :desc).limit(args[:top_n])
         else
           puts 'Movie.all'
           Movie.all
@@ -32,16 +32,17 @@ module Types
       argument :offset, !types.Int
       argument :limit, !types.Int
       resolve -> (obj, args, ctx) {
-        Movie.all.offset(args[:offset]).limit(args[:limit])
+        Movie.all.offset(args[:offset]).order(id: :desc).limit(args[:limit])
       }
     end
 
     field :movies_cursor do
       type types[Types::MovieType]
-      argument :cursor, !types.String
+      argument :cursor, types.String
       argument :limit, !types.Int
       resolve -> (obj, args, ctx) {
-        Movie.all.where('id > ?', args[:cursor]).limit(args[:limit])
+        result = Movie.all.order(id: :desc).limit(args[:limit])
+        args[:cursor] ? result.where('id < ?', args[:cursor]) : result
       }
     end
 
