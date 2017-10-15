@@ -1,5 +1,11 @@
+class NotAuthenticatedError < StandardError
+end
+
 class GraphqlController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :authenticate_request!
+
+  rescue_from NotAuthenticatedError, with: :unauthenticated!
 
   def execute
     variables = ensure_hash(params[:variables])
@@ -31,5 +37,19 @@ class GraphqlController < ApplicationController
     else
       raise ArgumentError, "Unexpected parameter: #{ambiguous_param}"
     end
+  end
+
+  def http_auth_token
+    @http_auth_token ||= if request.headers['Authorization'].present?
+                           request.headers['Authorization'].split(' ').last
+                         end
+  end
+
+  def authenticate_request!
+    raise NotAuthenticatedError unless http_auth_token == 'sample_auth_token'
+  end
+
+  def unauthenticated!
+    render json: { errors: ['Not Authenticated'] }, status: :unauthorized
   end
 end
