@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-import { createMovie, topNMoviesQuery, moviesQueryCursor } from '../queries/movies';
+import { compose } from 'recompose';
+import { createMovie as createMovieQuery, topNMoviesQuery, moviesQueryCursor } from '../queries/movies';
 
 class CreateMovie extends Component {
   handleSumbit = () => {
-    const { mutate } = this.props;
-    mutate({
+    const { createMovie } = this.props;
+    createMovie({
       variables: {
         title: this.title.value,
         year: parseInt(this.year.value, 10),
@@ -58,4 +59,6 @@ class CreateMovie extends Component {
   }
 }
 
-export default graphql(createMovie)(CreateMovie);
+export default compose(
+  graphql(createMovieQuery, { name: 'createMovie' }),
+)(CreateMovie);
